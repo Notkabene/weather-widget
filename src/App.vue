@@ -1,30 +1,48 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    123
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad impedit praesentium voluptas voluptatibus!
+      Ad blanditiis dicta est fugit illum, in nam nemo nostrum quia rerum, soluta temporibus unde vitae voluptates!
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad impedit praesentium voluptas voluptatibus!
+      Ad blanditiis dicta est fugit illum, in nam nemo nostrum quia rerum, soluta temporibus unde vitae voluptates!
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad impedit praesentium voluptas voluptatibus!
+      Ad blanditiis dicta est fugit illum, in nam nemo nostrum quia rerum, soluta temporibus unde vitae voluptates!
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad impedit praesentium voluptas voluptatibus!
+      Ad blanditiis dicta est fugit illum, in nam nemo nostrum quia rerum, soluta temporibus unde vitae voluptates!
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad impedit praesentium voluptas voluptatibus!
+      Ad blanditiis dicta est fugit illum, in nam nemo nostrum quia rerum, soluta temporibus unde vitae voluptates!
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad impedit praesentium voluptas voluptatibus!
+      Ad blanditiis dicta est fugit illum, in nam nemo nostrum quia rerum, soluta temporibus unde vitae voluptates!
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad impedit praesentium voluptas voluptatibus!
+      Ad blanditiis dicta est fugit illum, in nam nemo nostrum quia rerum, soluta temporibus unde vitae voluptates!
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad impedit praesentium voluptas voluptatibus!
+      Ad blanditiis dicta est fugit illum, in nam nemo nostrum quia rerum, soluta temporibus unde vitae voluptates!
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad impedit praesentium voluptas voluptatibus!
+      Ad blanditiis dicta est fugit illum, in nam nemo nostrum quia rerum, soluta temporibus unde vitae voluptates!
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad impedit praesentium voluptas voluptatibus!
+      Ad blanditiis dicta est fugit illum, in nam nemo nostrum quia rerum, soluta temporibus unde vitae voluptates!
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad impedit praesentium voluptas voluptatibus!
+      Ad blanditiis dicta est fugit illum, in nam nemo nostrum quia rerum, soluta temporibus unde vitae voluptates!
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad impedit praesentium voluptas voluptatibus!
+      Ad blanditiis dicta est fugit illum, in nam nemo nostrum quia rerum, soluta temporibus unde vitae voluptates!
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad impedit praesentium voluptas voluptatibus!
+      Ad blanditiis dicta est fugit illum, in nam nemo nostrum quia rerum, soluta temporibus unde vitae voluptates!
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad impedit praesentium voluptas voluptatibus!
+      Ad blanditiis dicta est fugit illum, in nam nemo nostrum quia rerum, soluta temporibus unde vitae voluptates!
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad impedit praesentium voluptas voluptatibus!
+      Ad blanditiis dicta est fugit illum, in nam nemo nostrum quia rerum, soluta temporibus unde vitae voluptates!
+    </p>
+
+    <WeatherWidget />
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+<script setup lang="ts">
+import WeatherWidget from './components/WeatherWidget.vue';
 
-export default defineComponent({
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-});
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
