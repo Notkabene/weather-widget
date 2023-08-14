@@ -5,8 +5,11 @@ export interface weatherInfoInterface {
     moisture: number;
     dew: number;
     visibility: number;
+    feelsLike: number;
     city: string;
     country: string;
+    description: string;
+    icon: string;
 }
 
 export interface countryInterface {

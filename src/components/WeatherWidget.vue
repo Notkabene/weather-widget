@@ -10,18 +10,18 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 // eslint-disable-next-line import/extensions
-// import { countryInterface } from '@/interfaces';
-// eslint-disable-next-line import/extensions
 import { countriesList } from '@/components/vars';
 import WeatherWidgetFront from '@/components/WeatherWidgetFront.vue';
 import WeatherWidgetSettings from '@/components/WeatherWidgetSettings.vue';
 
 const isFrontVisible = ref<boolean>(true);
+const countriesListLocal = localStorage.getItem('countriesList');
 
-// countriesList.value = [
-//   {id: 'knknj', city: 'London', country: 'GB'},
-//   {id: 'dsfsggfh', city: 'Moscow', country: 'RU'},
-// ];
+if(countriesListLocal) {
+  countriesList.value = JSON.parse(countriesListLocal);
+}
+if(!countriesList.value.length)
+  isFrontVisible.value = false;
 
 function toggleVisibleFront() {
   isFrontVisible.value = !isFrontVisible.value;

@@ -6,42 +6,41 @@
           {{ weatherInfo?.city }}, {{ weatherInfo?.country }}
         </p>
         <button type="button" class="widget-front__top-btn" @click="toggleVisible">
-          <img class="widget-front__data-icon" src="@/assets/img/settings.svg" />
+          <img class="widget-front__data-icon" src="../assets/img/icons/settings.svg" alt="настройки" />
         </button>
       </div>
       <div class="widget-front__preview">
-        <img class="widget-front__preview-img" src="@/assets/img/cloudy-day-1.svg" alt="" />
+        <img class="widget-front__preview-img" :src="getAsset(weatherInfo?.icon)" alt="иконка погоды" />
         <ul class="widget-front__data">
           <li :class="['widget-front__data-item', {skeleton: showLoader}]">
-            <img class="widget-front__data-icon" src="@/assets/img/temperature.svg" />
+            <img class="widget-front__data-icon" src="../assets/img/icons/temperature.svg" alt="температура" />
             <span>{{ Math.round(weatherInfo?.temperature) }}° С</span>
           </li>
           <li :class="['widget-front__data-item', {skeleton: showLoader}]">
-            <img class="widget-front__data-icon" src="@/assets/img/wind-white.svg" />
+            <img class="widget-front__data-icon" src="../assets/img/icons/wind-white.svg" alt="ветер" />
             <span>{{ weatherInfo?.wind }} m/s</span>
           </li>
           <li :class="['widget-front__data-item', {skeleton: showLoader}]">
-            <img class="widget-front__data-icon" src="@/assets/img/pressure.svg" />
+            <img class="widget-front__data-icon" src="../assets/img/icons/pressure.svg" alt="давление" />
             <span>{{ weatherInfo?.pressure }} hPa</span>
           </li>
           <li :class="['widget-front__data-item', {skeleton: showLoader}]">
-            <img class="widget-front__data-icon" src="@/assets/img/moisture-white.svg" />
+            <img class="widget-front__data-icon" src="../assets/img/icons/moisture-white.svg" alt="влажность" />
             <span>{{ weatherInfo?.moisture }}%</span>
           </li>
           <li :class="['widget-front__data-item', {skeleton: showLoader}]">
-            <img class="widget-front__data-icon" src="@/assets/img/dew.svg" />
+            <img class="widget-front__data-icon" src="../assets/img/icons/dew.svg" alt="роса" />
             <span>{{ Math.round(weatherInfo?.dew) }}° С</span>
           </li>
           <li :class="['widget-front__data-item', {skeleton: showLoader}]">
-            <img class="widget-front__data-icon" src="@/assets/img/visibility.svg" />
+            <img class="widget-front__data-icon" src="../assets/img/icons/visibility.svg" alt="видимость" />
             <span>{{ numberWithSpaces(weatherInfo?.visibility) }} km</span>
           </li>
         </ul>
       </div>
-      <div class="widget-front__info">
-        <span>Feels like -3град С</span>
-        <span>Broken Clouds</span>
-        <span>Light Breeze</span>
+      <div :class="['widget-front__info', {skeleton: showLoader}]">
+        <span>Ощущается как {{ Math.round(weatherInfo?.feelsLike) }}° С. </span>
+        <span>{{ weatherInfo?.description }}.</span>
       </div>
     </li>
   </ul>
@@ -50,9 +49,9 @@
 <script lang="ts" setup>
 import { PropType, ref } from 'vue';
 // eslint-disable-next-line import/extensions
-import { GEOLOCATION_API, WEATHER_API_KEY, WEATHER_API } from '@/constants';
+import { WEATHER_API_KEY, WEATHER_API } from '@/constants';
 // eslint-disable-next-line import/extensions
-import { weatherInfoInterface, responseGeo, responseWeather, countryInterface } from '@/interfaces';
+import { weatherInfoInterface, responseWeather, countryInterface } from '@/interfaces';
 
 const props = defineProps({
   item: {
@@ -62,8 +61,6 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['toggleVisible']);
-const lat = ref<number>();
-const lon = ref<number>();
 const showLoader = ref<boolean>(true);
 
 const weatherInfo = ref<weatherInfoInterface>({
@@ -75,20 +72,13 @@ const weatherInfo = ref<weatherInfoInterface>({
   visibility: 0,
   city: '',
   country: '',
+  description: '',
+  icon: '',
+  feelsLike: 0,
 });
 
-interface responseGeo {
-  name: string;
-  'local_names': { [key: string]: string };
-  lat: number;
-  lon: number;
-  country: string;
-  state: string;
-}
-
 async function getData() {
-  // await getGeolocation();
-  await fetch(`${WEATHER_API}lat=${lat.value}&lon=${lon.value}&lang=ru&appid=${WEATHER_API_KEY}&units=metric`)
+  await fetch(`${WEATHER_API}lat=${props.item.lat}&lon=${props.item.lon}&lang=ru&appid=${WEATHER_API_KEY}&units=metric`)
       .then(res => res.json())
       .then((res: responseWeather) => {
         weatherInfo.value.temperature = res.main.temp;
@@ -99,6 +89,9 @@ async function getData() {
         weatherInfo.value.visibility = res.visibility;
         weatherInfo.value.city = res.name;
         weatherInfo.value.country = res.sys.country;
+        weatherInfo.value.feelsLike = res.main.feels_like;
+        weatherInfo.value.icon = res.weather[0].icon ?? 'all';
+        weatherInfo.value.description = res.weather[0].description.charAt(0).toUpperCase() + res.weather[0].description.slice(1);
       });
       showLoader.value = false;
 }
@@ -113,6 +106,16 @@ function numberWithSpaces(number: number) {
 
 function toggleVisible() {
   emit('toggleVisible');
+}
+
+function getAsset (icon: string) {
+  const iconsNames = ['01d', '01n', '02d', '02n', '03d', '03n', '04d', '04n', '09d', '09n', '10d', '10n', '11d', '11n', '13d', '13n', 'all'];
+  if(!icon)
+    return require(`../assets/img/weathers/all.svg`);
+  else if(iconsNames.includes(icon))
+    return require(`../assets/img/weathers/${icon}.svg`);
+  else
+    return `https://openweathermap.org/img/wn/10d@${icon}.png`;
 }
 
 </script>
