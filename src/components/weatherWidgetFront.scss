@@ -1,6 +1,5 @@
 .widget-front {
   width: 100%;
-  //height: 350px;
   padding: 15px;
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 15px;
@@ -23,31 +22,22 @@
     }
   }
 
-  &__top-btn {
-  }
-
   &__preview {
     display: flex;
-    //align-items: center;
     padding-bottom: 15px;
     border-bottom: 1px solid rgb(149, 151, 159);
     margin-bottom: 10px;
   }
 
   &__preview-img {
-    max-width: 150px;
-    height: 150px;
-  }
-
-  &__preview-temperature {
+    max-width: 130px;
+    max-height: 130px;
+    margin-right: 15px;
   }
 
   &__info {
     text-align: center;
     font-style: italic;
-  }
-
-  &__data {
   }
 
   &__data-item {
@@ -58,7 +48,6 @@
       width: 92px;
     }
   }
-
 
   &__data-icon {
     width: 25px;

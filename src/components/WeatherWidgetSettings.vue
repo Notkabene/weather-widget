@@ -4,8 +4,8 @@
       <span>Настройки</span>
       <button type="button" class="widget-settings__close" @click="toggleVisible" />
     </div>
-    <ul class="widget-settings__cities">
-      <template v-if="countriesList?.length">
+    <div class="widget-settings__info">
+      <ul v-if="countriesList?.length" class="widget-settings__cities">
         <li v-for="item in countriesList" :key="item.id" class="widget-settings__city">
           <button type="button" class="widget-settings__move">
             <img src="../assets/img/icons/move.svg" alt="двигать" />
@@ -15,12 +15,20 @@
             <img src="../assets/img/icons/delete.svg" alt="удалить" />
           </button>
         </li>
-      </template>
-      <li v-else class="widget-settings__empty">
-        <img src="../assets/img/icons/circle_attention.svg" />
-        <span>Вы еще не выбрали города для отображения</span>
-      </li>
-    </ul>
+      </ul>
+      <div v-else class="widget-settings__empty">
+        <div class="widget-settings__empty-attention">
+          <img src="../assets/img/icons/circle_attention.svg" alt="важно" />
+          <span>Вы еще не выбрали города для отображения</span>
+        </div>
+        <div v-if="userLocation && userCity" class="widget-settings__user">
+          <span>Ваш город {{ userLocation.local_names.ru ?? userLocation.name }}?</span>
+          <button class="widget-settings__user-add" type="button" @click="addLocation(userCity)">
+            Нажмите, чтобы добавить
+          </button>
+        </div>
+      </div>
+    </div>
     <form class="widget-settings__form" @submit.prevent="getGeolocation">
       <label class="widget-settings__label" for="">Добавить город</label>
       <input v-model="inputValue" class="widget-settings__input" type="text" required />
@@ -32,7 +40,7 @@
     <ul class="widget-settings__add-list">
       <li v-for="city in newCities" :key="city" class="widget-settings__add-item">
         <button class="widget-settings__add-btn" @click="addLocation(city)">
-          <img class="widget-settings__add-icon" src="../assets/img/icons/add.svg" />
+          <img class="widget-settings__add-icon" src="../assets/img/icons/add.svg" alt="добавить" />
           <span>{{ city.city }}, {{ city.country }}</span>
         </button>
       </li>
@@ -41,18 +49,33 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 // eslint-disable-next-line import/extensions
 import { countriesList } from '@/components/vars';
 // eslint-disable-next-line import/extensions
 import { GEOLOCATION_API, WEATHER_API_KEY } from '@/constants';
 // eslint-disable-next-line import/extensions
 import { countryInterface, responseGeo } from '@/interfaces';
+import { PropType } from 'vue/dist/vue';
+
+const props = defineProps({
+  userLocation: {
+    type: Object as PropType<responseGeo>,
+    default: null,
+  },
+});
 
 const emit = defineEmits(['toggleVisible']);
 const newCities = ref<countryInterface[]>([]);
 const inputValue = ref<string>('');
 const isHasNewCities = ref<boolean>(true);
+const userCity = computed<countryInterface>(() => ({
+  id: `${props.userLocation.name}${props.userLocation.lat}`,
+  city: props.userLocation?.local_names?.ru ?? props.userLocation.name,
+  country: props.userLocation?.country,
+  lat: props.userLocation?.lat,
+  lon: props.userLocation?.lon,
+}));
 
 async function getGeolocation() {
   await fetch(`${GEOLOCATION_API}q=${inputValue.value}&limit=10&appid=${WEATHER_API_KEY}`)
