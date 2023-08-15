@@ -1,7 +1,5 @@
 <template>
-  <div id="weather-widget-app">
-    <WeatherWidget />
-  </div>
+  <WeatherWidget />
 </template>
 
 <script setup lang="ts">
