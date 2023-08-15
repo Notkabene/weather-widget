@@ -1,0 +1,12 @@
+// Цвета
+$text-color: rgb(51 26 47 / 80%);
+$title-color: #331a2f;
+$pink: #CF51CE;
+$white: #fff;
+
+// Медиазапросы
+@mixin _767 {
+  @media (max-width: 767px) {
+    @content;
+  }
+}

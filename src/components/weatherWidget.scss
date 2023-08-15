@@ -1,0 +1,48 @@
+.weather-widget {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 300px;
+  gap: 15px;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+  color: white;
+  scrollbar-color: rgb(149, 151, 159) transparent;
+  scrollbar-width: thin;
+
+  @include _767 {
+    font-size: 12px;
+  }
+
+  &::-webkit-scrollbar {
+    margin: 1px;
+    width: 10px;
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-border-radius: 100px;
+    border-radius: 100px;
+    background-color: transparent;
+    cursor: pointer;
+    margin: 10px 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    -webkit-border-radius: 100px;
+    border-radius: 100px;
+    background: rgb(149, 151, 159);
+    background-clip: content-box;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgb(149, 151, 159);
+    background-clip: content-box;
+  }
+}
+
