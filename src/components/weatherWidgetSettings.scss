@@ -1,5 +1,5 @@
 .widget-settings {
-  height: 350px;
+  max-height: 400px;
   padding: 15px;
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 15px;
@@ -40,7 +40,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     padding-bottom: 5px  ;
     border-bottom: 1px solid rgb(149, 151, 159);
   }
@@ -48,7 +48,6 @@
   &__info {
     padding-bottom: 10px;
     margin-bottom: 15px;
-    border-bottom: 1px solid rgb(149, 151, 159);
   }
 
   &__city {
@@ -56,10 +55,12 @@
     grid-template-columns: auto 1fr auto;
     gap: 15px;
     align-items: center;
+    height: 30px;
     background-color:  rgba(149, 151, 159, 0.8);
     padding: 5px;
     border-radius: 5px;
     margin-bottom: 15px;
+    cursor: grab;
   }
 
   &__delete,
@@ -90,7 +91,7 @@
   &__empty {
     text-align: center;
     &-attention {
-      padding-bottom: 10px;
+      padding-bottom: 20px;
       margin-bottom: 15px;
       border-bottom: 1px solid rgb(149, 151, 159);
     }
@@ -99,6 +100,11 @@
       width: 30px;
       height: 30px;
     }
+  }
+
+  &__user {
+    border-bottom: 1px solid rgb(149, 151, 159);
+    padding-bottom: 15px;
   }
 
   &__user-add {

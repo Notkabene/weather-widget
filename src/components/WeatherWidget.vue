@@ -13,21 +13,18 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref, watch } from 'vue';
-// eslint-disable-next-line import/extensions
+import { responseGeo } from '@/interfaces';
 import { countriesList } from '@/components/vars';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { GEOLOCATION_API_LAT_LON, WEATHER_API_KEY } from '@/constants';
 import WeatherWidgetFront from '@/components/WeatherWidgetFront.vue';
 import WeatherWidgetSettings from '@/components/WeatherWidgetSettings.vue';
-// eslint-disable-next-line import/extensions
-import { GEOLOCATION_API_LAT_LON, WEATHER_API_KEY } from '@/constants';
-// eslint-disable-next-line import/extensions
-import { responseGeo } from '@/interfaces';
 
+const watcher = ref<number>();
 const isFrontVisible = ref<boolean>(true);
-const userLocation = ref();
+const userLocation = ref<responseGeo>();
 const countriesListLocal = localStorage.getItem('countriesList');
 const isSupported = 'navigator' in window && 'geolocation' in navigator;
-const watcher = ref<number>();
 
 function getUserLocation() {
   if (isSupported && !countriesList.value.length)
@@ -52,6 +49,10 @@ if(countriesListLocal) {
   countriesList.value = JSON.parse(countriesListLocal);
 }
 
+function toggleVisibleFront() {
+  isFrontVisible.value = !isFrontVisible.value;
+}
+
 watch(countriesList, () => {
   if(!countriesList.value.length) {
     isFrontVisible.value = false;
@@ -59,10 +60,6 @@ watch(countriesList, () => {
       getUserLocation();
   }
 });
-
-function toggleVisibleFront() {
-  isFrontVisible.value = !isFrontVisible.value;
-}
 </script>
 
 <style lang="scss">

@@ -5,20 +5,28 @@
       <button type="button" class="widget-settings__close" @click="toggleVisible" />
     </div>
     <div class="widget-settings__info">
-      <ul v-if="countriesList?.length" class="widget-settings__cities">
-        <li v-for="item in countriesList" :key="item.id" class="widget-settings__city">
-          <button type="button" class="widget-settings__move">
-            <img src="../assets/img/icons/move.svg" alt="двигать" />
-          </button>
-          <span>{{ item.city }}, {{ item.country }}</span>
-          <button type="button" class="widget-settings__delete" @click="deleteCity(item)">
-            <img src="../assets/img/icons/delete.svg" alt="удалить" />
-          </button>
-        </li>
-      </ul>
+      <draggable
+        v-if="countriesList?.length"
+        v-model="countriesList"
+        class="widget-settings__cities"
+        tag="ul"
+        item-key="id"
+        @start="drag=true"
+        @end="drag=false"
+      >
+        <template #item="{element}">
+          <li class="widget-settings__city">
+            <img class="widget-settings__move" src="~@/assets/img/icons/move.svg" alt="двигать" />
+            <span>{{ element.city }}, {{ element.country }}</span>
+            <button type="button" class="widget-settings__delete" @click="deleteCity(element)">
+              <img src="@/assets/img/icons/delete.svg" alt="удалить" />
+            </button>
+          </li>
+        </template>
+      </draggable>
       <div v-else class="widget-settings__empty">
         <div class="widget-settings__empty-attention">
-          <img src="../assets/img/icons/circle_attention.svg" alt="важно" />
+          <img src="~@/assets/img/icons/circle_attention.svg" alt="важно" />
           <span>Вы еще не выбрали города для отображения</span>
         </div>
         <div v-if="userLocation && userCity" class="widget-settings__user">
@@ -40,7 +48,7 @@
     <ul class="widget-settings__add-list">
       <li v-for="city in newCities" :key="city" class="widget-settings__add-item">
         <button class="widget-settings__add-btn" @click="addLocation(city)">
-          <img class="widget-settings__add-icon" src="../assets/img/icons/add.svg" alt="добавить" />
+          <img class="widget-settings__add-icon" src="~@/assets/img/icons/add.svg" alt="добавить" />
           <span>{{ city.city }}, {{ city.country }}</span>
         </button>
       </li>
@@ -49,12 +57,10 @@
 </template>
 
 <script lang="ts" setup>
+import draggable from 'vuedraggable';
 import { computed, ref } from 'vue';
-// eslint-disable-next-line import/extensions
 import { countriesList } from '@/components/vars';
-// eslint-disable-next-line import/extensions
 import { GEOLOCATION_API, WEATHER_API_KEY } from '@/constants';
-// eslint-disable-next-line import/extensions
 import { countryInterface, responseGeo } from '@/interfaces';
 import { PropType } from 'vue/dist/vue';
 
@@ -65,6 +71,7 @@ const props = defineProps({
   },
 });
 
+const drag = ref<boolean>(false);
 const emit = defineEmits(['toggleVisible']);
 const newCities = ref<countryInterface[]>([]);
 const inputValue = ref<string>('');

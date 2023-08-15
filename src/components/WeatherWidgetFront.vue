@@ -10,7 +10,7 @@
         </button>
       </div>
       <div class="widget-front__preview">
-        <img class="widget-front__preview-img" :src="getAsset(weatherInfo?.icon)" alt="иконка погоды" />
+        <img class="widget-front__preview-img" :src="getAsset(weatherInfo.icon)" alt="иконка погоды" />
         <ul class="widget-front__data">
           <li :class="['widget-front__data-item', {skeleton: showLoader}]">
             <img class="widget-front__data-icon" src="../assets/img/icons/temperature.svg" alt="температура" />
@@ -48,9 +48,7 @@
 
 <script lang="ts" setup>
 import { PropType, ref } from 'vue';
-// eslint-disable-next-line import/extensions
 import { WEATHER_API_KEY, WEATHER_API } from '@/constants';
-// eslint-disable-next-line import/extensions
 import { weatherInfoInterface, responseWeather, countryInterface } from '@/interfaces';
 
 const props = defineProps({
